@@ -1,0 +1,60 @@
+﻿@model Request
+
+<style type="text/css">
+    .table-borderless td,
+    .table-borderless th {
+        border: 0;
+    }
+</style>
+<div class="modal fade" id="createRequest">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Создание нового запроса</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <table class="table table-borderless text-center" id="formsTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ИНН
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <form asp-action="Create" asp-controller="Home" id="0">
+                                        <div class="form-group">
+                                            <input asp-for="Inn" class="form-control" />
+                                            <span asp-validation-for="Inn" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input asp-for="StatusId" class="form-control" value="1" type="hidden" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input asp-for="ReportId" class="form-control" value=null type="hidden" />
+                                        </div>
+                                    </form>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-danger delete-position" disabled><i class="bi-x-square"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-outline-info add-more"><i class="bi-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-save="modal">Сохранить</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Request>
+@{
+    ViewData["Title"] = "Запросы";
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+
+<div id="modalContainer"></div>
+
+<div class="row text-center pb-4 pt-4">
+    <div class="col-sm-6">
+        <button class="btn btn-primary" asp-action="Create" data-toggle="ajax-modal" id="addBtn">Добавить новую запись</button>
+    </div>
+    <div class="col-sm-6">
+        <button class="btn btn-info" asp-action="SendToRobot" id="sendBtn">Отправить задание роботу</button>
+    </div>
+</div>
+
+<div id="partial" class="col-12">
+    @await Html.PartialAsync("RequestsDataTable", Model)
+</div>
+
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+
+@*@section Scripts{
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+        <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $("#requestsTable").on('click', '.delete', function () {
+                    $.ajax({
+                        type: "delete",
+                        url: $(this).attr("formaction"),
+                        success: function (result) {
+                            $('#partial').html(result)
+                        }
+                    });
+                });
+                $("#addBtn").click(function () {
+                    $.ajax({
+                        url: $(this).attr("formaction"),
+                    }).done(function (msg) {
+                        $("#dialogContent").html(msg);
+                        $("#modDialog").modal("show");
+                    })
+                });
+                $("body").on("click", "#save", function () {
+                    var form = $('form')
+                    //form.validate();
+                    //if (!form.valid()) { return false;}
+                    $.ajax({
+                        type: "post",
+                        url: form.attr('action'),
+                        data: {
+                            Inn: $("#Inn").val(),
+                        },
+                        dataType: "html",
+                        success: function (result) {
+                            $("#modDialog").modal("hide");
+                            $("#partial").html(result);
+                        }
+                    });
+                });
+            });
+        </script>
+    }*@

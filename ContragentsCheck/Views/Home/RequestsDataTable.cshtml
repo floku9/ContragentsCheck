@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Request>
+
+<link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+<table id="requestsTable" class="table text-center table-bordered" style="width: 100%;">
+    <thead>
+        <tr>
+            <th>ИНН</th>
+            <th>Статус</th>
+            <th>Отчет</th>
+            <th>Удалить</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Request req in Model)
+        {
+        <tr>
+            <td>@req.Inn</td>
+            <td>@req.Status.Name</td>
+            @if (req.Report == null)
+            {
+                <td></td>
+            }
+            else
+            {
+                <td>@req.Report.ReportLink</td>
+            }
+
+            @if (req.StatusId != 1)
+            {
+                <td>
+                    <button class="btn btn-block btn-outline-danger delete-btn" asp-action="Delete" asp-route-id=@req.Id disabled><i class="bi-trash" style="height:100%; width:100%"></i></button>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <button class="btn btn-block btn-outline-danger delete-btn" asp-action="Delete" asp-route-id=@req.Id><i class="bi-trash" style="height:100%; width:100%"></i></button>
+                </td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+<script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#requestsTable").DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Russian.json'
+            }
+        });
+        $('.delete-btn').click(function () {
+            let removingTr = $(this).closest('tr');
+            $.ajax({
+                type: "DELETE",
+                url: $(this).attr('formaction'),
+                async: true
+            }).done(function (res) {
+                $("#partial").html(res)
+            })
+        })
+    })
+</script>
